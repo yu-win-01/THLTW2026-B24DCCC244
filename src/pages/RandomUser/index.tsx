@@ -40,13 +40,11 @@ const RandomUser = () => {
 	const columns: IColumn<RandomUser.Record>[] = [
 		{
 			title: 'Address',
-			dataIndex: 'name',
 			key: 'name',
 			width: 200,
 		},
 		{
 			title: 'Balance',
-			dataIndex: 'url',
 			key: 'age',
 			width: 100,
 		},
@@ -97,8 +95,8 @@ const RandomUser = () => {
 			</Button>
 			<Table
 				onChange={(pagination) => {
-					setPageSize(pagination.pageSize);
-					setCurrent(pagination.current);
+					setPageSize(pagination.pageSize ?? 1);
+					setCurrent(pagination.current ?? 1);
 				}}
 				pagination={{ total, pageSize, current }}
 				dataSource={data2}
