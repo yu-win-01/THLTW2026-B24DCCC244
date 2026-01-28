@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 import { message } from 'antd';
+import { Id } from 'react-beautiful-dnd';
 export interface product {
 	id: number;
 	name: string;
 	price: number;
 	quantity: number;
 }
-
 export default () => {
 	const [sanPham, sanPhamList] = useState<product[]>([
 		{ id: 1, name: 'Laptop Dell XPS 13', price: 25000000, quantity: 10 },
@@ -19,15 +19,17 @@ export default () => {
 
 		{ id: 5, name: 'MacBook Air M3', price: 28000000, quantity: 8 },
 	]);
-	const addSanPham = useCallback((Item: Omit<product, 'id'>) => {
-		const maxId = sanPham.length > 0 ? Math.max(...sanPham.map((item) => item.id)) : 0;
-
-		const newSanPham: product = {
-			id: maxId + 1,
-			...Item,
-		};
-		sanPhamList((prev) => [...prev, newSanPham]);
-	}, []);
+	const maxId = sanPham.length > 0 ? Math.max(...sanPham.map((item) => item.id)) + 1 : 0;
+	const [maxIdState, setMaxIdState] = useState<number>(maxId);
+	const addSanPham = useCallback(
+		(Item: product) => {
+			Item.id = maxIdState;
+			const newSanPham = { ...Item };
+			sanPhamList([...sanPham, newSanPham]);
+			setMaxIdState((prev) => prev + 1);
+		},
+		[sanPham, maxIdState],
+	);
 	return {
 		sanPham,
 		sanPhamList,

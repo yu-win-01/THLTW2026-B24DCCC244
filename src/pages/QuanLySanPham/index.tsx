@@ -2,27 +2,53 @@ import { useModel } from 'umi';
 import { useState } from 'react';
 import { Table, Popconfirm, message, Button, Modal, Form, Input, InputNumber, Row, Col } from 'antd';
 import type { product } from '@/models/sanpham';
+import { set } from 'lodash';
 
 const QuanLySanPham = () => {
 	const { sanPham, sanPhamList, addSanPham } = useModel('sanpham');
 	const [visible, setVisible] = useState<boolean>(false);
+	const [issetEdit, setIsSetEdit] = useState<any>(null);
 	const [isSearch, setisSearch] = useState('');
-	const [form] = Form.useForm<Omit<product, 'id'>>();
+	const [form] = Form.useForm<product>();
 
 	const searchkey = sanPham.filter((item) => item.name.toLowerCase().includes(isSearch.toLowerCase()));
 
-	const handleaddproduct = (values: Omit<product, 'id'>) => {
-		addSanPham(values);
+	const handleaddproduct = () => {
+		addSanPham(form.getFieldsValue());
 		message.success('thêm sản phẩm thành công');
-		console.log(values, sanPham);
+		setIsSetEdit(null);
+		setVisible(false);
 		form.resetFields();
+	};
+	const handleeditproduct = () => {
+		const editedProduct = sanPham.map((item) => {
+			if (item.id === issetEdit.id) {
+				return { ...item, ...form.getFieldsValue() };
+			}
+			return item;
+		});
+		sanPhamList(editedProduct);
+		message.success('Cập nhật sản phẩm thành công');
+		setIsSetEdit(null);
+		setVisible(false);
+		form.resetFields();
+	};
+	const onEdit = (record: product) => {
+		setIsSetEdit(record);
+		form.setFieldsValue({
+			name: record.name,
+			price: record.price,
+			quantity: record.quantity,
+		});
+		setVisible(true);
 	};
 	const columns = [
 		{
 			title: 'STT',
-			dataIndex: 'id',
-			key: 'id',
+			dataIndex: 'stt',
+			key: 'stt',
 			align: 'center' as const,
+			render: (_: any, __: any, index: number) => index + 1,
 		},
 		{
 			title: 'tên sản phẩm',
@@ -49,6 +75,12 @@ const QuanLySanPham = () => {
 			render: (_: any, record: any) => {
 				return (
 					<div>
+						<Button
+							style={{ backgroundColor: '#1890ff', color: 'white', marginLeft: 8 }}
+							onClick={() => onEdit(record)}
+						>
+							Sửa
+						</Button>
 						<Popconfirm
 							title='Bạn có chắc chắn muốn xóa?'
 							onConfirm={() => {
@@ -96,8 +128,17 @@ const QuanLySanPham = () => {
 			</Row>
 			<Table dataSource={searchkey} columns={columns} rowKey='id' />
 
-			<Modal title='Thêm Sản Phẩm' visible={visible} onCancel={() => setVisible(false)} footer={null}>
-				<Form<Omit<product, 'id'>> form={form} layout='vertical' onFinish={handleaddproduct}>
+			<Modal
+				title={issetEdit ? 'Cập nhật' : 'Thêm mới'}
+				visible={visible}
+				onCancel={() => setVisible(false)}
+				footer={null}
+			>
+				<Form<Omit<product, 'id'>>
+					form={form}
+					layout='vertical'
+					onFinish={issetEdit ? handleeditproduct : handleaddproduct}
+				>
 					<Form.Item label='tên' name='name' rules={[{ required: true, message: 'hãy ghi tên vào ô trống!' }]}>
 						<Input />
 					</Form.Item>
@@ -117,7 +158,7 @@ const QuanLySanPham = () => {
 					</Form.Item>
 					<div className='form-footer'>
 						<Button style={{ backgroundColor: '#c10003', color: 'white' }} type='primary' htmlType='submit'>
-							thêm mới
+							{issetEdit ? 'Cập nhật' : 'Thêm mới'}
 						</Button>
 
 						<Button onClick={() => setVisible(false)}>Hủy</Button>
