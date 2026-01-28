@@ -63,19 +63,18 @@ const useDonHangModel = () => {
 		}
 	}, [donhang]);
 
-	const [maxIdState, setMaxIdState] = useState(2);
+	const maxId =
+		donhang.length > 0 ? Math.max(...donhang.map((item) => parseInt(item.id.replace('DH', ''), 10))) + 1 : 1;
+	const [maxIdState, setMaxIdState] = useState(maxId);
 
 	const addDonHang = useCallback(
-		(item: Omit<Order, 'id'>) => {
-			const newItem: Order = {
-				...item,
-				id: `DH${maxIdState.toString().padStart(3, '0')}`,
-			};
-
-			setDonhang((prev) => [...prev, newItem]);
+		(item: Order) => {
+			item.id = `DH${maxIdState.toString().padStart(3, '0')}`;
+			const newDonHang = { ...item };
+			setDonhang([...donhang, newDonHang]);
 			setMaxIdState((prev) => prev + 1);
 		},
-		[maxIdState],
+		[donhang, maxIdState],
 	);
 
 	const tongTien = (products: OrderProduct[]) =>

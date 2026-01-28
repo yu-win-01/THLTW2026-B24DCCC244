@@ -326,9 +326,15 @@ const QuanLyDonHang = () => {
 					<Form.Item
 						label='Số điện thoại'
 						name='phone'
-						rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
+						rules={[
+							{ required: true, message: 'Vui lòng nhập số điện thoại' },
+							{
+								pattern: /^0\d{10}$/,
+								message: 'Số điện thoại phải gồm 11 số và bắt đầu bằng 0',
+							},
+						]}
 					>
-						<Input />
+						<Input maxLength={11} />
 					</Form.Item>
 					<Form.Item label='Địa chỉ' name='address' rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}>
 						<Input />
