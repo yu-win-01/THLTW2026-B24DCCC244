@@ -1,171 +1,179 @@
+import { Tabs, Statistic, Row, Col, Card, Progress, Badge } from 'antd';
+import { ShoppingCartOutlined, AppstoreOutlined, DollarOutlined } from '@ant-design/icons';
+import QuanLySanPham from './sanpham';
+import QuanLyDonHang from './donhang';
 import { useModel } from 'umi';
-import { useState } from 'react';
-import { Table, Popconfirm, message, Button, Modal, Form, Input, InputNumber, Row, Col } from 'antd';
+import type { Order } from '@/models/donhang';
 import type { product } from '@/models/sanpham';
-import { set } from 'lodash';
 
-const QuanLySanPham = () => {
-	const { sanPham, sanPhamList, addSanPham } = useModel('sanpham');
-	const [visible, setVisible] = useState<boolean>(false);
-	const [issetEdit, setIsSetEdit] = useState<any>(null);
-	const [isSearch, setisSearch] = useState('');
-	const [form] = Form.useForm<product>();
+const { TabPane } = Tabs;
 
-	const searchkey = sanPham.filter((item) => item.name.toLowerCase().includes(isSearch.toLowerCase()));
+const QuanLy = () => {
+	const { sanPham } = useModel('sanpham') as { sanPham: product[] };
+	const { donhang } = useModel('donhang') as { donhang: Order[] };
 
-	const handleaddproduct = () => {
-		addSanPham(form.getFieldsValue());
-		message.success('thêm sản phẩm thành công');
-		setIsSetEdit(null);
-		setVisible(false);
-		form.resetFields();
+	const tongSoSanPham = sanPham.length;
+	const tongGiaTriTonKho = sanPham.reduce((total, sp) => total + sp.price * sp.quantity, 0);
+	const tongSoDonHang = donhang.length;
+
+	const donHangHoanThanh = donhang.filter((dh) => dh.status === 'completed' || dh.status === 'Hoàn thành');
+	const doanhThu = donHangHoanThanh.reduce((total, dh) => total + (dh.totalAmount || 0), 0);
+
+	const donHangTheoTrangThai = {
+		pending: donhang.filter((dh) => dh.status === 'pending' || dh.status === 'Chờ xử lý').length,
+		shipping: donhang.filter((dh) => dh.status === 'shipping' || dh.status === 'Đang giao').length,
+		completed: donhang.filter((dh) => dh.status === 'completed' || dh.status === 'Hoàn thành').length,
+		cancelled: donhang.filter((dh) => dh.status === 'cancelled' || dh.status === 'Đã hủy').length,
 	};
-	const handleeditproduct = () => {
-		const editedProduct = sanPham.map((item) => {
-			if (item.id === issetEdit.id) {
-				return { ...item, ...form.getFieldsValue() };
-			}
-			return item;
-		});
-		sanPhamList(editedProduct);
-		message.success('Cập nhật sản phẩm thành công');
-		setIsSetEdit(null);
-		setVisible(false);
-		form.resetFields();
-	};
-	const onEdit = (record: product) => {
-		setIsSetEdit(record);
-		form.setFieldsValue({
-			name: record.name,
-			price: record.price,
-			quantity: record.quantity,
-		});
-		setVisible(true);
-	};
-	const columns = [
-		{
-			title: 'STT',
-			dataIndex: 'stt',
-			key: 'stt',
-			align: 'center' as const,
-			render: (_: any, __: any, index: number) => index + 1,
-		},
-		{
-			title: 'tên sản phẩm',
-			dataIndex: 'name',
-			key: 'name',
-			align: 'center' as const,
-		},
-		{
-			title: 'Giá',
-			dataIndex: 'price',
-			key: 'price',
-			align: 'center' as const,
-		},
-		{
-			title: 'Số lượng',
-			dataIndex: 'quantity',
-			key: 'quantity',
-			align: 'center' as const,
-		},
-		{
-			title: 'Thao tác',
-			key: 'action',
-			align: 'center' as const,
-			render: (_: any, record: any) => {
-				return (
-					<div>
-						<Button
-							style={{ backgroundColor: '#1890ff', color: 'white', marginLeft: 8 }}
-							onClick={() => onEdit(record)}
-						>
-							Sửa
-						</Button>
-						<Popconfirm
-							title='Bạn có chắc chắn muốn xóa?'
-							onConfirm={() => {
-								sanPhamList(sanPham.filter((item) => item.id !== record.id));
-								message.success('Xóa sản phẩm thành công');
-							}}
-							okText='Có'
-							cancelText='Không'
-						>
-							<Button style={{ backgroundColor: '#c10003', color: 'white' }}>Xóa</Button>
-						</Popconfirm>
-					</div>
-				);
-			},
-		},
-	];
+
+	const tiLeHoanThanh = tongSoDonHang > 0 ? (donHangTheoTrangThai.completed / tongSoDonHang) * 100 : 0;
 
 	return (
-		<div>
-			<h2>Quản Lý Sản Phẩm</h2>
-			<Row justify='space-between' align='middle'>
-				<Col>
-					<Button
-						type='primary'
-						style={{ marginBottom: 16 }}
-						onClick={() => {
-							setVisible(true);
-						}}
-					>
-						Thêm Sản Phẩm
-					</Button>
-				</Col>
-				<Col>
-					<div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-						<span style={{ whiteSpace: 'nowrap' }}>Tìm kiếm:</span>
-						<Input
-							type='text'
-							placeholder='Nhập từ khóa...'
-							style={{ width: 200 }}
-							value={isSearch}
-							onChange={(e) => setisSearch(e.target.value)}
+		<div style={{ padding: '24px', background: '#f0f2f5' }}>
+			<h2 style={{ marginBottom: 24 }}>Dashboard Quản Lý</h2>
+
+			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+				<Col xs={24} sm={12} lg={6}>
+					<Card hoverable>
+						<Statistic
+							title='Tổng số sản phẩm'
+							value={tongSoSanPham}
+							prefix={<AppstoreOutlined />}
+							valueStyle={{ color: '#3f8600' }}
 						/>
-					</div>
+					</Card>
+				</Col>
+
+				<Col xs={24} sm={12} lg={6}>
+					<Card hoverable>
+						<Statistic
+							title='Tổng giá trị tồn kho'
+							value={tongGiaTriTonKho}
+							prefix={<DollarOutlined />}
+							suffix='đ'
+							valueStyle={{ color: '#cf1322' }}
+						/>
+					</Card>
+				</Col>
+
+				<Col xs={24} sm={12} lg={6}>
+					<Card hoverable>
+						<Statistic
+							title='Tổng số đơn hàng'
+							value={tongSoDonHang}
+							prefix={<ShoppingCartOutlined />}
+							valueStyle={{ color: '#1890ff' }}
+						/>
+					</Card>
+				</Col>
+
+				<Col xs={24} sm={12} lg={6}>
+					<Card hoverable>
+						<Statistic
+							title='Doanh thu (Hoàn thành)'
+							value={doanhThu}
+							prefix={<DollarOutlined />}
+							suffix='đ'
+							valueStyle={{ color: '#52c41a' }}
+						/>
+					</Card>
 				</Col>
 			</Row>
-			<Table dataSource={searchkey} columns={columns} rowKey='id' />
 
-			<Modal
-				title={issetEdit ? 'Cập nhật' : 'Thêm mới'}
-				visible={visible}
-				onCancel={() => setVisible(false)}
-				footer={null}
-			>
-				<Form<Omit<product, 'id'>>
-					form={form}
-					layout='vertical'
-					onFinish={issetEdit ? handleeditproduct : handleaddproduct}
-				>
-					<Form.Item label='tên' name='name' rules={[{ required: true, message: 'hãy ghi tên vào ô trống!' }]}>
-						<Input />
-					</Form.Item>
-					<Form.Item
-						label='giá'
-						name='price'
-						rules={[{ required: true, type: 'integer', message: 'hãy ghi giá vào ô trống!' }]}
-					>
-						<InputNumber precision={0} min={0} />
-					</Form.Item>
-					<Form.Item
-						label='số lượng'
-						name='quantity'
-						rules={[{ required: true, type: 'integer', message: 'hãy ghi số lượng vào ô trống!' }]}
-					>
-						<InputNumber precision={0} min={0} />
-					</Form.Item>
-					<div className='form-footer'>
-						<Button style={{ backgroundColor: '#c10003', color: 'white' }} type='primary' htmlType='submit'>
-							{issetEdit ? 'Cập nhật' : 'Thêm mới'}
-						</Button>
+			<Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+				<Col xs={24} lg={12}>
+					<Card title='Đơn hàng theo trạng thái' hoverable>
+						<div style={{ marginBottom: 16 }}>
+							<div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+								<span>
+									<Badge color='orange' /> Chờ xử lý
+								</span>
+								<span>{donHangTheoTrangThai.pending}</span>
+							</div>
+							<Progress
+								percent={(donHangTheoTrangThai.pending / tongSoDonHang) * 100}
+								strokeColor='orange'
+								showInfo={false}
+							/>
+						</div>
 
-						<Button onClick={() => setVisible(false)}>Hủy</Button>
-					</div>
-				</Form>
-			</Modal>
+						<div style={{ marginBottom: 16 }}>
+							<div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+								<span>
+									<Badge color='blue' /> Đang giao
+								</span>
+								<span>{donHangTheoTrangThai.shipping}</span>
+							</div>
+							<Progress
+								percent={(donHangTheoTrangThai.shipping / tongSoDonHang) * 100}
+								strokeColor='blue'
+								showInfo={false}
+							/>
+						</div>
+
+						<div style={{ marginBottom: 16 }}>
+							<div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+								<span>
+									<Badge color='green' /> Hoàn thành
+								</span>
+								<span>{donHangTheoTrangThai.completed}</span>
+							</div>
+							<Progress
+								percent={(donHangTheoTrangThai.completed / tongSoDonHang) * 100}
+								strokeColor='green'
+								showInfo={false}
+							/>
+						</div>
+
+						<div>
+							<div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+								<span>
+									<Badge color='red' /> Đã hủy
+								</span>
+								<span>{donHangTheoTrangThai.cancelled}</span>
+							</div>
+							<Progress
+								percent={(donHangTheoTrangThai.cancelled / tongSoDonHang) * 100}
+								strokeColor='red'
+								showInfo={false}
+							/>
+						</div>
+					</Card>
+				</Col>
+
+				<Col xs={24} lg={12}>
+					<Card title='Tỷ lệ hoàn thành' hoverable>
+						<Progress
+							type='circle'
+							percent={Math.round(tiLeHoanThanh)}
+							strokeColor={{
+								'0%': '#108ee9',
+								'100%': '#87d068',
+							}}
+							style={{ display: 'flex', justifyContent: 'center' }}
+						/>
+						<div style={{ textAlign: 'center', marginTop: 16 }}>
+							<p style={{ fontSize: 16, color: '#666' }}>
+								{donHangTheoTrangThai.completed} / {tongSoDonHang} đơn hàng hoàn thành
+							</p>
+						</div>
+					</Card>
+				</Col>
+			</Row>
+
+			<Card>
+				<Tabs defaultActiveKey='donhang'>
+					<TabPane tab='Quản lý đơn hàng' key='donhang'>
+						<QuanLyDonHang />
+					</TabPane>
+
+					<TabPane tab='Quản lý sản phẩm' key='sanpham'>
+						<QuanLySanPham />
+					</TabPane>
+				</Tabs>
+			</Card>
 		</div>
 	);
 };
-export default QuanLySanPham;
+
+export default QuanLy;
