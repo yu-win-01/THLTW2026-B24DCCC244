@@ -31,7 +31,7 @@ const loadFromStorage = (): product[] => {
 			return JSON.parse(stored);
 		}
 	} catch (error) {
-		console.error('Error loading from localStorage:', error);
+		console.error('lỗi khi tải dữ liệu từ localstorage:', error);
 	}
 	return defaultData;
 };
@@ -43,7 +43,7 @@ export default () => {
 		try {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(sanPham));
 		} catch (error) {
-			console.error('Error saving to localStorage:', error);
+			console.error('lưu dữ liệu trên localstorage thất bại:', error);
 		}
 	}, [sanPham]);
 	const maxId = sanPham.length > 0 ? Math.max(...sanPham.map((item) => item.id)) + 1 : 0;

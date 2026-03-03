@@ -48,7 +48,18 @@
 		icon: 'OrderedListOutlined',
 		component: './QuanLySanPham',
 	},
-
+	{
+		path: '/random-game',
+		name: 'Random Game',
+		icon: 'OrderedListOutlined',
+		component: './RandomGame',
+	},
+	{
+		path: '/todo-list-mon-hoc',
+		name: 'Todo List Môn học',
+		icon: 'OrderedListOutlined',
+		component: './TodoListMonHoc',
+	},
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
