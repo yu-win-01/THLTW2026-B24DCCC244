@@ -11,11 +11,14 @@ const loadFromStorage = (): monhoc[] => {
 	try {
 		const stored = localStorage.getItem(STORAGE_KEY);
 		if (stored) {
-			return JSON.parse(stored);
+			const result = JSON.parse(stored);
+			console.log('📚 Load môn học từ localStorage:', result.length, 'items');
+			return result;
 		}
 	} catch (error) {
 		console.error('lỗi khi tải dữ liệu từ localstorage:', error);
 	}
+	console.log('⚠️ Không có dữ liệu môn học trong localStorage');
 	return [];
 };
 
@@ -25,6 +28,7 @@ export const useMonHocModel = () => {
 	useEffect(() => {
 		try {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(monHoc));
+			console.log('✅ Đã lưu môn học vào localStorage:', monHoc.length, 'items');
 		} catch (error) {
 			console.error('lưu dữ liệu trên localstorage thất bại:', error);
 		}

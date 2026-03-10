@@ -12,11 +12,14 @@ const loadFromStorage = (): muctieumonhoc[] => {
 	try {
 		const stored = localStorage.getItem(STORAGE_KEY);
 		if (stored) {
-			return JSON.parse(stored);
+			const result = JSON.parse(stored);
+			console.log('🎯 Load mục tiêu môn học từ localStorage:', result.length, 'items');
+			return result;
 		}
 	} catch (error) {
 		console.error('lỗi khi tải dữ liệu từ localstorage:', error);
 	}
+	console.log('⚠️ Không có dữ liệu mục tiêu trong localStorage');
 	return [];
 };
 
@@ -26,6 +29,7 @@ export const useMucTieuMonHocModel = () => {
 	useEffect(() => {
 		try {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(mucTieuMonHoc));
+			console.log('✅ Đã lưu mục tiêu vào localStorage:', mucTieuMonHoc.length, 'items');
 		} catch (error) {
 			console.error('lưu dữ liệu trên localstorage thất bại:', error);
 		}

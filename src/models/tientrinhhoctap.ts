@@ -18,16 +18,19 @@ const loadFromStorage = (): tientrinhmonhoc[] => {
 		const stored = localStorage.getItem(STORAGE_KEY);
 		if (stored) {
 			const data = JSON.parse(stored);
-			return data.map((item: any) => ({
+			const result = data.map((item: any) => ({
 				...item,
 				noiDungDaHoc: item.noiDungDaHoc || item.ghiChu || '',
 				ghiChu: item.ghiChu || '',
 				ngayhoc: item.ngayhoc || item.Datetime || new Date().toISOString(),
 			}));
+			console.log('📚 Load tiến trình học tập từ localStorage:', result.length, 'items');
+			return result;
 		}
 	} catch (error) {
 		console.error('lỗi khi tải dữ liệu từ localstorage:', error);
 	}
+	console.log('⚠️ Không có dữ liệu tiến trình học tập trong localStorage');
 	return [];
 };
 
@@ -37,6 +40,7 @@ export const useTienTrinhMonHocModel = () => {
 	useEffect(() => {
 		try {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(tienTrinhMonHoc));
+			console.log('✅ Đã lưu tiến trình học tập vào localStorage:', tienTrinhMonHoc.length, 'items');
 		} catch (error) {
 			console.error('lưu dữ liệu trên localstorage thất bại:', error);
 		}
@@ -59,6 +63,7 @@ export const useTienTrinhMonHocModel = () => {
 			ghiChu,
 			hoanThanh: false,
 		};
+		console.log('\u2795 Th\u00eam ti\u1ebfn tr\u00ecnh m\u1edbi:', newTienTrinh);
 		setTienTrinhMonHoc((prev) => [...prev, newTienTrinh]);
 
 		window.dispatchEvent(new CustomEvent('tientrinhmonhoc-updated'));
@@ -77,6 +82,7 @@ export const useTienTrinhMonHocModel = () => {
 		ghiChu: string,
 		ngayhoc: Date,
 	) => {
+		console.log('\u270f\ufe0f S\u1eeda ti\u1ebfn tr\u00ecnh ID:', id);
 		setTienTrinhMonHoc((prev) =>
 			prev.map((item) => (item.id === id ? { ...item, thoiLuongHoc, noiDungDaHoc, ghiChu, ngayhoc } : item)),
 		);
@@ -84,12 +90,15 @@ export const useTienTrinhMonHocModel = () => {
 	};
 
 	const xoaTienTrinhMonHoc = (id: number) => {
+		console.log('\u274c X\u00f3a ti\u1ebfn tr\u00ecnh ID:', id);
 		setTienTrinhMonHoc((prev) => prev.filter((tienTrinh) => tienTrinh.id !== id));
 		window.dispatchEvent(new CustomEvent('tientrinhmonhoc-updated'));
 	};
 
 	const refreshTienTrinhMonHoc = () => {
-		setTienTrinhMonHoc(loadFromStorage());
+		const freshData = loadFromStorage();
+		console.log('🔄 Refresh tiến trình học tập từ localStorage:', freshData.length, 'items');
+		setTienTrinhMonHoc(freshData);
 	};
 
 	return {

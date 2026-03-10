@@ -6,6 +6,7 @@ import { useTienTrinhMonHocModel } from '@/models/tientrinhhoctap';
 import { useMucTieuMonHocModel } from '@/models/muctieumonhoc';
 import TienDoHocTap from './tienDoHocTap';
 import DanhSachMonHoc from './danhSachMonHoc';
+import '@/utils/debugLocalStorage'; // Import debug utilities
 
 const { TabPane } = Tabs;
 
@@ -34,9 +35,11 @@ const TodoListMonHoc = () => {
 
 	useEffect(() => {
 		const handleTienTrinhUpdate = () => {
+			console.log('🔔 Event: tientrinhmonhoc-updated - Refreshing data...');
 			refreshTienTrinhMonHoc();
 		};
 		const handleMucTieuUpdate = () => {
+			console.log('🔔 Event: muctieumonhoc-updated - Refreshing data...');
 			refreshMucTieuMonHoc();
 		};
 
@@ -47,7 +50,7 @@ const TodoListMonHoc = () => {
 			window.removeEventListener('tientrinhmonhoc-updated', handleTienTrinhUpdate);
 			window.removeEventListener('muctieumonhoc-updated', handleMucTieuUpdate);
 		};
-	}, []);
+	}, [refreshTienTrinhMonHoc, refreshMucTieuMonHoc]);
 
 	const handleTabChange = (key: string) => {
 		setActiveKey(key);

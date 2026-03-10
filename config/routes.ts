@@ -60,6 +60,18 @@
 		icon: 'OrderedListOutlined',
 		component: './TodoListMonHoc',
 	},
+	{
+		path: '/tro-choi-oan-tu-ti',
+		name: 'Trò chơi oẳn tù tì',
+		icon: 'OrderedListOutlined',
+		component: './TroChoiOanTuTi',
+	},
+	{
+		path: '/he-thong-quan-li-ngan-hang-cau-hoi',
+		name: 'Hệ thống quản lý ngân hàng câu hỏi',
+		icon: 'OrderedListOutlined',
+		component: './HeThongQuanLiNganHangCauHoi',
+	},
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
