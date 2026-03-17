@@ -1,4 +1,6 @@
-﻿export default [
+﻿import path from 'path';
+
+export default [
 	{
 		path: '/user',
 		layout: false,
@@ -41,6 +43,38 @@
 		name: 'TodoList',
 		icon: 'OrderedListOutlined',
 		component: './TodoList',
+	},
+	{
+		path: '/he-thong-quan-li-nhan-vien-va-dich-vu',
+		name: 'Hệ thống quản lí nhân viên và dịch vụ',
+		icon: 'OrderedListOutlined',
+		routes: [
+			{
+				path: '/he-thong-quan-li-nhan-vien-va-dich-vu/dat-lich-hen',
+				name: 'Đặt lịch hẹn',
+				component: './HeThongQuanLiNhanVienVaDichVu/DatLichHen',
+			},
+			{
+				path: '/he-thong-quan-li-nhan-vien-va-dich-vu/lich-hen',
+				name: 'Quản lý lịch hẹn',
+				component: './HeThongQuanLiNhanVienVaDichVu/LichHen',
+			},
+			{
+				path: '/he-thong-quan-li-nhan-vien-va-dich-vu/dich-vu',
+				name: 'Dịch vụ',
+				component: './HeThongQuanLiNhanVienVaDichVu/DichVu',
+			},
+			{
+				path: '/he-thong-quan-li-nhan-vien-va-dich-vu/quan-ly-nhan-vien',
+				name: 'Quản lý nhân viên',
+				component: './HeThongQuanLiNhanVienVaDichVu/QuanLyNhanVien',
+			},
+			{
+				path: '/he-thong-quan-li-nhan-vien-va-dich-vu/thong-ke',
+				name: 'Thống kê',
+				component: './HeThongQuanLiNhanVienVaDichVu/Thongke',
+			},
+		],
 	},
 
 	// DANH MUC HE THONG
