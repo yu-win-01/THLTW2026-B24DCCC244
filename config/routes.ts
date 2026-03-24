@@ -76,6 +76,38 @@ export default [
 			},
 		],
 	},
+	{
+		path: '/he-thong-quan-li-van-bang-to-nghiep',
+		name: 'Hệ thống quản lí văn bằng tốt nghiệp',
+		icon: 'OrderedListOutlined',
+		routes: [
+			{
+				path: '/he-thong-quan-li-van-bang-to-nghiep/cau-hinh-bieu-mau',
+				name: 'Cấu hình biểu mẫu',
+				component: './HeThongQuanLiVaBangTotNghiep/CauHinhBieuMau',
+			},
+			{
+				path: '/he-thong-quan-li-van-bang-to-nghiep/so-van-bang',
+				name: 'Sổ văn bằng',
+				component: './HeThongQuanLiVaBangTotNghiep/SoVanBang',
+			},
+			{
+				path: '/he-thong-quan-li-van-bang-to-nghiep/quyet-dinh-tot-nghiep',
+				name: 'Quyết định tốt nghiệp',
+				component: './HeThongQuanLiVaBangTotNghiep/QuyetDinhTotNghiep',
+			},
+			{
+				path: '/he-thong-quan-li-van-bang-to-nghiep/van-bang-tot-nghiep',
+				name: 'Văn bằng tốt nghiệp',
+				component: './HeThongQuanLiVaBangTotNghiep/VanBangTotNghiep',
+			},
+			{
+				path: '/he-thong-quan-li-van-bang-to-nghiep/tra-cuu-van-bang',
+				name: 'Tra cứu văn bằng',
+				component: './HeThongQuanLiVaBangTotNghiep/TraCuuVanBang',
+			},
+		],
+	},
 
 	// DANH MUC HE THONG
 	// {

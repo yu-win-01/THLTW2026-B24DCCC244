@@ -188,7 +188,7 @@ class LocalStorageManager {
 						nhanVien: [],
 						lichHen: [],
 						danhGia: [],
-					};
+				  };
 		} catch (error) {
 			console.error('Lỗi tải toàn bộ dữ liệu:', error);
 			return {
@@ -200,10 +200,7 @@ class LocalStorageManager {
 		}
 	}
 
-	saveData<T extends keyof LichHeThong.HeThongLichHen>(
-		type: T,
-		data: LichHeThong.HeThongLichHen[T],
-	): boolean {
+	saveData<T extends keyof LichHeThong.HeThongLichHen>(type: T, data: LichHeThong.HeThongLichHen[T]): boolean {
 		switch (type) {
 			case 'dichVu':
 				return this.saveDichVu(data as LichHeThong.DichVu[]);
@@ -218,9 +215,7 @@ class LocalStorageManager {
 		}
 	}
 
-	loadData<T extends keyof LichHeThong.HeThongLichHen>(
-		type: T,
-	): LichHeThong.HeThongLichHen[T] {
+	loadData<T extends keyof LichHeThong.HeThongLichHen>(type: T): LichHeThong.HeThongLichHen[T] {
 		switch (type) {
 			case 'dichVu':
 				return this.loadDichVu() as LichHeThong.HeThongLichHen[T];
@@ -429,16 +424,17 @@ export const useAppointmentSystemStorage = () => {
 	};
 };
 
-export const useAppointmentStorage = <T extends keyof LichHeThong.HeThongLichHen>(
-	type: T,
-) => {
+export const useAppointmentStorage = <T extends keyof LichHeThong.HeThongLichHen>(type: T) => {
 	const load = useCallback(() => {
 		return appointmentStorage.loadData(type);
 	}, [type]);
 
-	const save = useCallback((data: LichHeThong.HeThongLichHen[T]) => {
-		return appointmentStorage.saveData(type, data);
-	}, [type]);
+	const save = useCallback(
+		(data: LichHeThong.HeThongLichHen[T]) => {
+			return appointmentStorage.saveData(type, data);
+		},
+		[type],
+	);
 
 	const clear = useCallback(() => {
 		return appointmentStorage.clearData(type as any);
