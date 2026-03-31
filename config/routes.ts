@@ -77,6 +77,33 @@ export default [
 		],
 	},
 	{
+		path: '/he-thong-quan-li-cau-lac-bo',
+		name: 'Hệ thống quản lí câu lạc bộ',
+		icon: 'OrderedListOutlined',
+		routes: [
+			{
+				path: '/he-thong-quan-li-cau-lac-bo/danh-sach-cau-lac-bo',
+				name: 'Danh sách câu lạc bộ',
+				component: './HeThongQuanLiCauLacBo/DanhSachCauLacBo',
+			},
+			{
+				path: '/he-thong-quan-li-cau-lac-bo/quan-ly-don-dang-ky-thanh-vien',
+				name: 'Quản lý đơn đăng ký thành viên',
+				component: './HeThongQuanLiCauLacBo/QuanLyDonDangKyThanhVien',
+			},
+			{
+				path: '/he-thong-quan-li-cau-lac-bo/quan-ly-thanh-vien-cua-clb',
+				name: 'Quản lý thành viên của câu lạc bộ',
+				component: './HeThongQuanLiCauLacBo/QuanLyThanhVienCuaCLB',
+			},
+			{
+				path: '/he-thong-quan-li-cau-lac-bo/bao-cao-thong-ke-hoat-dong-clb',
+				name: 'Báo cáo thống kê hoạt động câu lạc bộ',
+				component: './HeThongQuanLiCauLacBo/BaoCaoThongKeHoatDongCLB',
+			},
+		],
+	},
+	{
 		path: '/he-thong-quan-li-van-bang-to-nghiep',
 		name: 'Hệ thống quản lí văn bằng tốt nghiệp',
 		icon: 'OrderedListOutlined',
