@@ -9,6 +9,7 @@
 		"jsx": "react-jsx",
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
 		"moduleResolution": "node",
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitReturns": true,

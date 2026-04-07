@@ -135,6 +135,24 @@ export default [
 			},
 		],
 	},
+	{
+		path: '/he-thong-lap-ke-hoach-du-lich',
+		name: 'Hệ thống lập kế hoạch du lịch',
+		icon: 'OrderedListOutlined',
+		routes: [
+			{
+				path: '/he-thong-lap-ke-hoach-du-lich/trang-chu',
+				name: 'Trang chủ',
+				component: './HeThongLapKeHoachDuLich',
+			},
+			{
+				path: '/he-thong-lap-ke-hoach-du-lich/trang-admin',
+				name: 'Trang admin',
+				component: './HeThongLapKeHoachDuLich/TrangAdmin',
+				exact: true,
+			},
+		],
+	},
 
 	// DANH MUC HE THONG
 	// {
