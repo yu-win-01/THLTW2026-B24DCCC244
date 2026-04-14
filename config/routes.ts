@@ -153,6 +153,12 @@ export default [
 			},
 		],
 	},
+	{
+		path: '/quan-ly-khoa-hoc-online',
+		name: 'Quản lý khóa học online',
+		icon: 'OrderedListOutlined',
+		component: './QuanLyKhoaHocOnline',
+	},
 
 	// DANH MUC HE THONG
 	// {
