@@ -159,7 +159,42 @@ export default [
 		icon: 'OrderedListOutlined',
 		component: './QuanLyKhoaHocOnline',
 	},
-
+	{
+		path: '/he-thong-ung-dung-blog-ca-nhan',
+		name: 'Hệ thống ứng dụng blog cá nhân',
+		icon: 'OrderedListOutlined',
+		routes: [
+			{
+				path: '/he-thong-ung-dung-blog-ca-nhan/trang-chu',
+				name: 'Trang chủ',
+				component: './HeThongUngDungBlogCaNhan',
+			},
+			{
+				path: '/he-thong-ung-dung-blog-ca-nhan/trang-gioi-thieu',
+				name: 'Trang giới thiệu',
+				component: './HeThongUngDungBlogCaNhan/TrangGioiThieu',
+				exact: true,
+			},
+			{
+				path: '/he-thong-ung-dung-blog-ca-nhan/trang-chi-tiet-bai-viet/:id',
+				name: 'Trang chi tiết bài viết',
+				component: './HeThongUngDungBlogCaNhan/TrangChiTietBaiViet',
+				exact: true,
+			},
+			{
+				path: '/he-thong-ung-dung-blog-ca-nhan/quan-ly-bai-viet',
+				name: 'Quản lý bài viết',
+				component: './HeThongUngDungBlogCaNhan/QuanLyBaiViet',
+				exact: true,
+			},
+			{
+				path: '/he-thong-ung-dung-blog-ca-nhan/quan-ly-the',
+				name: 'Quản lý thẻ',
+				component: './HeThongUngDungBlogCaNhan/QuanLyThe',
+				exact: true,
+			},
+		],
+	},
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
@@ -178,17 +213,17 @@ export default [
 		path: '/notification',
 		routes: [
 			{
-				path: './subscribe',
+				path: '/notification/subscribe',
 				exact: true,
 				component: './ThongBao/Subscribe',
 			},
 			{
-				path: './check',
+				path: '/notification/check',
 				exact: true,
 				component: './ThongBao/Check',
 			},
 			{
-				path: './',
+				path: '/notification',
 				exact: true,
 				component: './ThongBao/NotifOneSignal',
 			},
