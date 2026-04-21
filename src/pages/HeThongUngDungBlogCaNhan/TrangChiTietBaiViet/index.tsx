@@ -54,7 +54,6 @@ const TrangChiTietBaiViet: React.FC = () => {
 
 	return (
 		<div style={{ paddingBottom: 48 }}>
-			{/* Breadcrumb */}
 			<Breadcrumb style={{ marginBottom: 24 }}>
 				<Breadcrumb.Item>
 					<Button type='link' onClick={() => history.push('/he-thong-ung-dung-blog-ca-nhan/trang-chu')}>
@@ -64,16 +63,13 @@ const TrangChiTietBaiViet: React.FC = () => {
 				<Breadcrumb.Item>{post.title}</Breadcrumb.Item>
 			</Breadcrumb>
 
-			{/* Back Button */}
 			<div style={{ marginBottom: 16 }}>
 				<Button icon={<ArrowLeftOutlined />} onClick={handleBack} type='default'>
 					Quay lại
 				</Button>
 			</div>
 
-			{/* Main Post Card */}
 			<Card style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} bodyStyle={{ padding: '32px' }}>
-				{/* Post Header Image */}
 				{post.thumbnail && (
 					<div style={{ marginBottom: 24, borderRadius: 8, overflow: 'hidden' }}>
 						<img
@@ -89,12 +85,10 @@ const TrangChiTietBaiViet: React.FC = () => {
 					</div>
 				)}
 
-				{/* Post Title */}
 				<Title level={1} style={{ marginBottom: 24 }}>
 					{post.title}
 				</Title>
 
-				{/* Post Meta Information */}
 				<Space direction='vertical' size='large' style={{ width: '100%', marginBottom: 24 }}>
 					<Row gutter={[24, 16]}>
 						<Col xs={24} sm={12} md={6}>
@@ -128,7 +122,6 @@ const TrangChiTietBaiViet: React.FC = () => {
 						</Col>
 					</Row>
 
-					{/* Tags */}
 					{postTags.length > 0 && (
 						<div>
 							<Text strong style={{ marginRight: 12 }}>
@@ -156,7 +149,6 @@ const TrangChiTietBaiViet: React.FC = () => {
 
 				<Divider />
 
-				{/* Post Content */}
 				<div
 					className='markdown-content'
 					style={{
@@ -170,7 +162,6 @@ const TrangChiTietBaiViet: React.FC = () => {
 
 				<Divider style={{ marginTop: 32 }} />
 
-				{/* Post Footer */}
 				<Row justify='space-between' align='middle' style={{ marginTop: 24 }}>
 					<Col>
 						<Text type='secondary' italic>
@@ -185,7 +176,6 @@ const TrangChiTietBaiViet: React.FC = () => {
 				</Row>
 			</Card>
 
-			{/* Related Posts Section */}
 			{relatedPosts.length > 0 && (
 				<div style={{ marginTop: 48 }}>
 					<Title level={2} style={{ marginBottom: 24 }}>
