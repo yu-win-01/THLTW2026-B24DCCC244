@@ -24,7 +24,6 @@ const QuanLyBaiViet: React.FC = () => {
 		setFilteredPosts(loadedPosts);
 	}, []);
 
-	// Auto filter khi posts, searchQuery, hoặc statusFilter thay đổi
 	useEffect(() => {
 		let filtered = posts;
 		if (searchQuery) {
@@ -38,7 +37,6 @@ const QuanLyBaiViet: React.FC = () => {
 
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
-		// Gọi filterPosts ngay với giá trị mới, không đợi state update
 		let filtered = posts;
 		if (query) {
 			filtered = filtered.filter((post) => post.title.toLowerCase().includes(query.toLowerCase()));
@@ -51,7 +49,6 @@ const QuanLyBaiViet: React.FC = () => {
 
 	const handleStatusFilter = (status: string) => {
 		setStatusFilter(status);
-		// Gọi filter ngay với giá trị mới, không đợi state update
 		let filtered = posts;
 		if (searchQuery) {
 			filtered = filtered.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -85,7 +82,6 @@ const QuanLyBaiViet: React.FC = () => {
 		form.validateFields().then((values) => {
 			const now = new Date().toISOString();
 			if (editingPost) {
-				// Edit
 				const updatedPost: Post = {
 					...editingPost,
 					...values,
@@ -97,7 +93,6 @@ const QuanLyBaiViet: React.FC = () => {
 				setIsModalVisible(false);
 				message.success('Đã cập nhật bài viết');
 			} else {
-				// Add
 				const newPost: Post = {
 					...values,
 					id: generateId(),
