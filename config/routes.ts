@@ -195,6 +195,43 @@ export default [
 			},
 		],
 	},
+	{
+		path: '/he-thong-xay-dung-ung-dung-the-duc-theo-doi-suc-khoe',
+		name: 'Hệ thống ứng dụng thể dục theo dõi sức khỏe',
+		icon: 'OrderedListOutlined',
+		routes: [
+			{
+				path: '/he-thong-xay-dung-ung-dung-the-duc-theo-doi-suc-khoe/trang-chu',
+				name: 'Trang chủ',
+				component: './HeThongXayDungUngDungTheDucTheoDoiSucKhoe',
+			},
+			{
+				path: '/he-thong-xay-dung-ung-dung-the-duc-theo-doi-suc-khoe/nhat-ky-tap-luyen',
+				name: 'Nhật ký tập luyện',
+				component: './HeThongXayDungUngDungTheDucTheoDoiSucKhoe/NhatKyTapLuyen',
+				exact: true,
+			},
+			{
+				path: '/he-thong-xay-dung-ung-dung-the-duc-theo-doi-suc-khoe/nhat-ky-chi-so-suc-khoe',
+				name: 'Nhật ký chỉ số sức khỏe',
+				component: './HeThongXayDungUngDungTheDucTheoDoiSucKhoe/NhatKyChiSoSucKhoe',
+				exact: true,
+			},
+			{
+				path: '/he-thong-xay-dung-ung-dung-the-duc-theo-doi-suc-khoe/quan-ly-muc-tieu',
+				name: 'Quản lý mục tiêu',
+				component: './HeThongXayDungUngDungTheDucTheoDoiSucKhoe/QuanLyMucTieu',
+				exact: true,
+			},
+			{
+				path: '/he-thong-xay-dung-ung-dung-the-duc-theo-doi-suc-khoe/thu-vien-bai-tap',
+				name: 'Thư viện bài tập',
+				component: './HeThongXayDungUngDungTheDucTheoDoiSucKhoe/ThuVienBaiTap',
+				exact: true,
+			},
+		],
+	},
+
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
