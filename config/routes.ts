@@ -231,6 +231,36 @@ export default [
 			},
 		],
 	},
+	{
+		path: '/he-thong-theo-doi-cong-viec-ca-nhan',
+		name: 'Hệ thống theo dõi công việc cá nhân',
+		icon: 'OrderedListOutlined',
+		routes: [
+			{
+				path: '/he-thong-theo-doi-cong-viec-ca-nhan/dashboard',
+				name: 'dashboard',
+				component: './HeThongTheoDoiCongViecCaNhan',
+			},
+			{
+				path: '/he-thong-theo-doi-cong-viec-ca-nhan/kanban-board',
+				name: 'Kanban Board',
+				component: './HeThongTheoDoiCongViecCaNhan/KanbanBoard',
+				exact: true,
+			},
+			{
+				path: '/he-thong-theo-doi-cong-viec-ca-nhan/danh-sach-tasks',
+				name: 'Danh sách tasks',
+				component: './HeThongTheoDoiCongViecCaNhan/DanhSachTasks',
+				exact: true,
+			},
+			{
+				path: '/he-thong-theo-doi-cong-viec-ca-nhan/quan-ly-tag',
+				name: 'Quản lý tag',
+				component: './HeThongTheoDoiCongViecCaNhan/QuanLyTag',
+				exact: true,
+			},
+		],
+	},
 
 	// DANH MUC HE THONG
 	// {

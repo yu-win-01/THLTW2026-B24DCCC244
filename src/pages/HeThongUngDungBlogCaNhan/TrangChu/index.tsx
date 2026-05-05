@@ -101,7 +101,7 @@ const TrangChu: React.FC = () => {
 								</span>
 							</div>
 							<div style={{ marginTop: 8 }}>
-								{post.tags.map((tagId) => {
+								{(post.tags || []).map((tagId) => {
 									const tag = tags.find((t) => t.id === tagId);
 									return tag ? <Tag key={tagId}>{tag.name}</Tag> : null;
 								})}

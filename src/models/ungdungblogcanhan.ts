@@ -61,7 +61,12 @@ const useUngDungBlogCaNhan = () => {
 		const authorData = localStorage.getItem(STORAGE_KEYS.AUTHOR);
 
 		if (postsData) {
-			setPosts(JSON.parse(postsData));
+			const parsedPosts = JSON.parse(postsData);
+			const fixedPosts = parsedPosts.map((post: any) => ({
+				...post,
+				tags: post.tags || [],
+			}));
+			setPosts(fixedPosts);
 		}
 		if (tagsData) {
 			setTags(JSON.parse(tagsData));
@@ -153,6 +158,7 @@ const useUngDungBlogCaNhan = () => {
 				const now = new Date().toISOString();
 				const newPost: UngDungBlogCaNhan.Post = {
 					...data,
+					tags: data.tags || [],
 					id: generateId(),
 					views: 0,
 					createdAt: now,
@@ -172,7 +178,13 @@ const useUngDungBlogCaNhan = () => {
 		(id: string, data: Partial<Omit<UngDungBlogCaNhan.Post, 'id' | 'views' | 'createdAt'>>): boolean => {
 			try {
 				const now = new Date().toISOString();
-				setPosts((prev) => prev.map((post) => (post.id === id ? { ...post, ...data, updatedAt: now } : post)));
+				setPosts((prev) =>
+					prev.map((post) =>
+						post.id === id
+							? { ...post, ...data, tags: data.tags !== undefined ? data.tags : post.tags, updatedAt: now }
+							: post,
+					),
+				);
 				return true;
 			} catch (error) {
 				console.error('Error updating post:', error);
